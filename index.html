@@ -15,17 +15,29 @@
 </head>
 
 <body>
-    <div id="center">
-        <div id="play-time"></div>
+    <div class="container-contact">
+        <div class="row row-block">
+            <!-- 大區域 -->
+            <div class="col-sm-3">
+                <div id="play-time"></div>
+            </div>
+            <div class="col-sm-6">
+                <div id="game-screen">
+                    <div id="player"></div>
+                    <div id="finish-line"></div>
+                </div>
+                <div id="gamesetting">
+                    <h4>輸入難度倍數</h4>
+                    <input class="form-control" type="number" value="1" min="1" id="hardmode">
+                    <button class="btn" onclick="startGame()">開始遊戲</button>
+                </div>
+            </div>
+            <div class="col-sm-3">
 
-        <div id="game-screen">
-            <div id="player"></div>
-            <div id="finish-line"></div>
+            </div>
         </div>
     </div>
-    <div id="button-div">
-        <button class="btn" onclick="startGame()">開始遊戲</button>
-    </div>
+
 </body>
 
 </html>

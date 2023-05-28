@@ -6,11 +6,21 @@ let obstacleInterval = null;
 let finishLineInterval = null;
 let obstacleSpeed = 5; // 障礙物速度 (單位: 像素/毫秒)
 let playerLeft = 0; // 紅點初始左位移
+let hardmode = 1;
 let gameendmode = false;
+
 
 function startGame() {
     document.getElementById('game-screen').style.display = 'block';
-    document.querySelector('#button-div').style.display = 'none';
+    document.querySelector('#gamesetting').style.display = 'none';
+    hardmode = document.getElementById('hardmode').value;
+
+    if (hardmode == "" || hardmode == null || hardmode <= 0) {
+        hardmode = 1;
+    }
+
+    hardmode = 0.02 * hardmode;
+
     startTime = new Date().getTime();
     gameRunning = true;
 
@@ -108,7 +118,7 @@ function moveObstacles() {
         }
     }
 
-    if (Math.random() < 0.2 && !gameendmode) {
+    if (Math.random() < hardmode && !gameendmode) {
         // 隨機生成障礙物
         const obstacle = document.createElement('div');
         obstacle.classList.add('obstacle');

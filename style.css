@@ -1,26 +1,23 @@
 /* CSS樣式設定 */
 html,
-body,
-#center {
+body {
     background-color: #fce7f0;
     margin: 0 auto;
 }
 
-#center {
-    margin: 0 auto;
-    width: 60%;
+.container-contact {
+    padding: 20px;
     text-align: center;
-    padding-top: 50px;
+    color: black;
+    width: 100%;
 }
 
-#button-div {
-    height: 600px;
-    line-height: 600px;
-    margin: 0 auto;
-    width: 15%;
+#gamesetting{
+    margin-top: 50%;
 }
 
 .btn {
+    margin-top: 10px;
     background-color: #f575a9;
     vertical-align: middle;
     font-size: 30px;
@@ -28,6 +25,11 @@ body,
 
 .btn:hover {
     background-color: #f69cc2;
+}
+
+#play-time{
+    font-weight: bolder;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #game-screen {
