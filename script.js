@@ -10,7 +10,7 @@ let gameendmode = false;
 
 function startGame() {
     document.getElementById('game-screen').style.display = 'block';
-    document.querySelector('button').style.display = 'none';
+    document.querySelector('#button-div').style.display = 'none';
     startTime = new Date().getTime();
     gameRunning = true;
 
