@@ -6,7 +6,6 @@ body {
 #game-screen {
     width: 800px;
     height: 600px;
-    border: 1px solid #000;
     overflow: hidden;
     position: relative;
     display: none;
