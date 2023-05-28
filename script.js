@@ -108,7 +108,7 @@ function moveObstacles() {
         }
     }
 
-    if (Math.random() < 0.1 && !gameendmode) {
+    if (Math.random() < 0.2 && !gameendmode) {
         // 隨機生成障礙物
         const obstacle = document.createElement('div');
         obstacle.classList.add('obstacle');
@@ -116,6 +116,10 @@ function moveObstacles() {
         obstacle.style.top = '-40px'; // 初始障礙物位置在畫面最上方
         gameScreen.appendChild(obstacle);
     }
+
+    const endTime = new Date().getTime();
+    const play_time = "遊戲時長：" + Math.floor((endTime - startTime) / 1000) + " 秒";
+    document.getElementById("play-time").innerHTML = play_time;
 }
 
 function showFinishLine() {
