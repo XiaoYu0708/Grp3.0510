@@ -108,7 +108,8 @@
                     const td_time = document.createElement("td");
                     const td_endGame = document.createElement("td");
                     const td_playDate = document.createElement("td");
-                    const td_button = document.createElement("button");
+                    const td_button = document.createElement("td");
+                    const button = document.createElement("button");
 
                     if (endGame == false) {
                         endGame = "未完成";
@@ -122,14 +123,16 @@
                     td_endGame.innerHTML = endGame;
                     td_playDate.innerHTML = playDate;
 
-                    td_button.name = name;
-                    td_button.className = "btn";
-                    td_button.innerHTML = "刪除";
-                    td_button.addEventListener('click', function () {
+                    button.name = name;
+                    button.className = "btn";
+                    button.innerHTML = "刪除";
+                    button.addEventListener('click', function () {
                         // 呼叫 doDelete() 函式來刪除特定的資料
                         doDelete(this.name);
                         location.reload();
                     });
+
+                    td_button.appendChild(button);
 
                     tr.appendChild(td_name);
                     tr.appendChild(td_hardmode);
@@ -162,6 +165,9 @@
     let playerLeft = 0; // 紅點初始左位移
     let hardmode = 1;
     let gameendmode = false;
+
+    var game_screen_width = document.getElementById("game-screen").offsetWidth;
+    var game_screen_height = document.getElementById("game-screen").offsetHeight;
 
     document.querySelector('#startGame').addEventListener('click', function () {
         document.getElementById('game-screen').style.display = 'block';
@@ -221,15 +227,18 @@
         const currentLeft = parseInt(player.style.left) || 0;
         const newLeft = currentLeft + playerLeft * 5;
 
+        game_screen_width = document.getElementById("game-screen").offsetWidth;
+        game_screen_height = document.getElementById("game-screen").offsetHeight;
+
         // 限制只能在畫面範圍內移動
         if (newLeft < 0) player.style.left = '0px';
-        else if (newLeft > 780) player.style.left = '780px';
+        else if (newLeft > game_screen_width - 20) player.style.left = game_screen_width - 20 + 'px';
         else player.style.left = newLeft + 'px';
 
         // 檢查是否碰到終點線
         const finishLine = document.getElementById('finish-line');
         const finishLineTop = parseInt(finishLine.style.top) || 0;
-        if (570 <= finishLineTop + 20 && 570 + 20 >= finishLineTop) {
+        if (game_screen_height - 30 <= finishLineTop + 20 && game_screen_height - 30 + 20 >= finishLineTop) {
             // 碰到終點線，完成遊戲
             endGame(true);
             return;
@@ -245,8 +254,8 @@
             if (
                 newLeft + 20 > obstacleLeft &&
                 newLeft < obstacleLeft + 40 &&
-                570 + 20 > obstacleTop &&
-                570 < obstacleTop + 40
+                game_screen_height - 30 + 20 > obstacleTop &&
+                game_screen_height - 30 < obstacleTop + 40
             ) {
                 // 撞到障礙物，結束遊戲
                 endGame(false);
@@ -266,7 +275,9 @@
             // 更新障礙物位置
             obstacle.style.top = newTop + 'px';
 
-            if (newTop > 600) {
+            game_screen_height = document.getElementById("game-screen").offsetHeight;
+
+            if (newTop > game_screen_height) {
                 // 障礙物超出螢幕，移除
                 obstacle.remove();
             }
@@ -276,7 +287,10 @@
             // 隨機生成障礙物
             const obstacle = document.createElement('div');
             obstacle.classList.add('obstacle');
-            obstacle.style.left = Math.floor(Math.random() * 760) + 'px';
+
+            game_screen_width = document.getElementById("game-screen").offsetWidth;
+
+            obstacle.style.left = Math.floor(Math.random() * game_screen_width - 40) + 'px';
             obstacle.style.top = '-40px'; // 初始障礙物位置在畫面最上方
             gameScreen.appendChild(obstacle);
         }
@@ -300,7 +314,9 @@
 
         finishLine.style.top = newTop + 'px';
 
-        if (newTop > 600) {
+        game_screen_height = document.getElementById("game-screen").offsetHeight;
+
+        if (newTop > game_screen_height) {
             // 終點線到達畫面最下方，停止移動
             clearInterval(finishLineInterval);
         }
@@ -357,14 +373,22 @@
     <div class="container-contact">
         <div class="row row-block">
             <!-- 大區域 -->
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div id="play-time"></div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div id="game-screen">
                     <div id="player"></div>
                     <div id="finish-line"></div>
                 </div>
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-1">
+
+            </div>
+            <div class="col-sm-10">
                 <div id="gamesetting">
                     <h4>輸入難度倍數</h4>
                     <input class="form-control" type="number" value="1" min="1" id="hardmode" aria-label="number">
@@ -386,7 +410,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-1">
 
             </div>
         </div>

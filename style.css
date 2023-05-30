@@ -30,15 +30,21 @@ body {
     font-size: 30px;
 }
 
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
 #play-time {
+    align-items: center;
     font-weight: bolder;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #game-screen {
     background-color: #f8c2da;
-    width: 800px;
-    height: 600px;
+    width: 100%;
+    height: 60vh;
     overflow: hidden;
     position: relative;
     display: none;
