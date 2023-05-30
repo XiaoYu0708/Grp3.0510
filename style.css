@@ -12,7 +12,7 @@ body {
     width: 100%;
 }
 
-#gamesetting{
+#gamesetting {
     margin-top: 50%;
 }
 
@@ -20,16 +20,19 @@ body {
     margin-top: 10px;
     background-color: #f575a9;
     vertical-align: middle;
-    font-size: 30px;
 }
 
 .btn:hover {
     background-color: #f69cc2;
 }
 
-#play-time{
+.btn.start {
+    font-size: 30px;
+}
+
+#play-time {
     font-weight: bolder;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #game-screen {

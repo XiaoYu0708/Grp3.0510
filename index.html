@@ -17,7 +17,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+    import { getDatabase, ref, set, get, remove } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -71,6 +71,23 @@
             });
     }
 
+    function doDelete(key) {
+        // Get a reference to the database
+        const database = getDatabase();
+
+        // Reference to a specific location in the database
+        const dataRef = ref(database, `path/to/${key}`);
+
+        // Remove the data at the specified location
+        remove(dataRef)
+            .then(() => {
+                console.log(`Data for key "${key}" has been successfully deleted.`);
+            })
+            .catch((error) => {
+                console.error('Error deleting data:', error);
+            });
+    }
+
     doGet()
         .then((result) => {
             const data = result; // 將結果轉換為物件
@@ -78,10 +95,52 @@
                 if (data.hasOwnProperty(key)) {
                     const item = data[key];
                     const name = item.data.name;
+                    const hardmode = item.data.hardmode;
                     const time = item.data.time;
-                    const endGame = item.data.endGame;
+                    var endGame = item.data.endGame; //var:可以被更改的
                     const playDate = item.data.playDate;
-                    console.log(name, time, endGame, playDate);
+
+                    //顯示成績的部分
+                    const list_history = document.getElementById("list-history");
+                    const tr = document.createElement("tr");
+                    const td_name = document.createElement("td");
+                    const td_hardmode = document.createElement("td");
+                    const td_time = document.createElement("td");
+                    const td_endGame = document.createElement("td");
+                    const td_playDate = document.createElement("td");
+                    const td_button = document.createElement("button");
+
+                    if (endGame == false) {
+                        endGame = "未完成";
+                    } else {
+                        endGame = "完成";
+                    }
+
+                    td_name.innerHTML = name;
+                    td_hardmode.innerHTML = hardmode;
+                    td_time.innerHTML = time;
+                    td_endGame.innerHTML = endGame;
+                    td_playDate.innerHTML = playDate;
+
+                    td_button.name = name;
+                    td_button.className = "btn";
+                    td_button.innerHTML = "刪除";
+                    td_button.addEventListener('click', function () {
+                        // 呼叫 doDelete() 函式來刪除特定的資料
+                        doDelete(this.name);
+                        location.reload();
+                    });
+
+                    tr.appendChild(td_name);
+                    tr.appendChild(td_hardmode);
+                    tr.appendChild(td_time);
+                    tr.appendChild(td_endGame);
+                    tr.appendChild(td_playDate);
+                    tr.appendChild(td_button);
+
+                    list_history.appendChild(tr);
+
+                    console.log(name, hardmode, time, endGame, playDate);
                 }
             }
         })
@@ -257,6 +316,8 @@
         const totalTime = Math.floor((endTime - startTime) / 1000);
         const playDate = new Date().getFullYear() + "/" + new Date().getMonth() + "/" + new Date().getDate();
 
+        hardmode = hardmode / 0.02;
+
         if (mode === false) {
             alert('挑戰失敗！遊戲時長 ' + totalTime + ' 秒。');
             var name = "";
@@ -267,6 +328,7 @@
 
             doPost({
                 name: name,
+                hardmode: hardmode,
                 time: totalTime,
                 endGame: false,
                 playDate: playDate
@@ -280,6 +342,7 @@
             }
             doPost({
                 name: name,
+                hardmode: hardmode,
                 time: totalTime,
                 endGame: true,
                 playDate: playDate
@@ -305,14 +368,28 @@
                 <div id="gamesetting">
                     <h4>輸入難度倍數</h4>
                     <input class="form-control" type="number" value="1" min="1" id="hardmode" aria-label="number">
-                    <button class=" btn" id="startGame">開始遊戲</button>
+                    <button class="btn start" id="startGame">開始遊戲</button>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">姓名</th>
+                                <th scope="col">難度倍數</th>
+                                <th scope="col">遊戲時長(單位：秒)</th>
+                                <th scope="col">完成度</th>
+                                <th scope="col">日期</th>
+                                <th scope="col">刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-history">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-sm-3">
 
             </div>
         </div>
-    </div>
 </body>
 
 
