@@ -259,7 +259,12 @@
 
         if (mode === false) {
             alert('挑戰失敗！遊戲時長 ' + totalTime + ' 秒。');
-            const name = prompt("請輸入姓名");
+            var name = "";
+
+            while (name == null || name == "") {
+                name = prompt("請輸入姓名");
+            }
+
             doPost({
                 name: name,
                 time: totalTime,
@@ -268,7 +273,11 @@
             });
         } else {
             alert('恭喜完成遊戲！');
-            const name = prompt("請輸入姓名");
+            var name = "";
+
+            while (name == null || name == "") {
+                name = prompt("請輸入姓名");
+            }
             doPost({
                 name: name,
                 time: totalTime,
