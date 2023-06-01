@@ -363,7 +363,7 @@ function endGame(mode) {
 
     const endTime = new Date().getTime();
     const totalTime = Math.floor((endTime - startTime) / 1000);
-    const playDate = new Date().getFullYear() + "/" + new Date().getMonth() + "/" + new Date().getDate();
+    const playDate = new Date().getFullYear() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getDate();
 
     hardmode = hardmode / 0.02;
 
