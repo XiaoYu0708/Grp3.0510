@@ -371,9 +371,13 @@ function endGame(mode) {
         alert('挑戰失敗！遊戲時長 ' + totalTime + ' 秒。');
         var name = "";
 
+
+
         while (name == null || name == "") {
             name = prompt("請輸入姓名");
         }
+
+        name = name.toLocaleLowerCase();
 
         doPost({
             name: name,
@@ -389,6 +393,9 @@ function endGame(mode) {
         while (name == null || name == "") {
             name = prompt("請輸入姓名");
         }
+
+        name = name.toLocaleLowerCase();
+
         doPost({
             name: name,
             hardmode: hardmode,
